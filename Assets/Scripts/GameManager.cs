@@ -7,12 +7,31 @@ public class GameManager : MonoBehaviour
     public Bird birdPlayer;
     public Text scoreText;
     public GameObject playButton;
+    public GameObject instructionButton;
+    public GameObject instructionsPanel;
     public GameObject gameOver;
+    public GameObject restartText;
     private int score;
+    private bool isGameOver = false;
+
 
     private void Awake()
     {
+        playButton.SetActive(true);
+        instructionButton.SetActive(true);
+        gameOver.SetActive(false);
+        restartText.SetActive(false);
+        instructionsPanel.SetActive(false);
         Pause();
+    }
+
+    private void Update()
+    {
+        if (isGameOver && Input.GetKeyDown(KeyCode.R))
+        {
+            Play();
+            isGameOver = false;
+        }
     }
 
     public void Play()
@@ -21,7 +40,10 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
 
         playButton.SetActive(false);
+        instructionButton.SetActive(false);
         gameOver.SetActive(false);
+        restartText.SetActive(false);
+        instructionButton.SetActive(false);
 
         Time.timeScale = 1f;
         birdPlayer.enabled = true;
@@ -45,7 +67,9 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOver.SetActive(true);
+        restartText.SetActive(true);
         playButton.SetActive(true);
+        isGameOver = true;
 
         Pause();
     }
@@ -54,5 +78,17 @@ public class GameManager : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString();
+    }
+
+    // Open the instructions panel
+    public void ShowInstructions()
+    {
+        instructionsPanel.SetActive(true);
+    }
+
+    // Close the instructions panel
+    public void HideInstructions()
+    {
+        instructionsPanel.SetActive(false);
     }
 }
