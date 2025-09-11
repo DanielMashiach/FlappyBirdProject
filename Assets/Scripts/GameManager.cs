@@ -78,6 +78,11 @@ public class GameManager : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString();
+
+        if(score % 10 == 0) // every 10 points
+        {
+        birdPlayer.RainbowEffect(2f); // rainbow for 2 seconds
+        }
     }
 
     // Open the instructions panel

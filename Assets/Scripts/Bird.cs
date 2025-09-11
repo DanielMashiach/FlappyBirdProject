@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class Bird : MonoBehaviour
 {
 
@@ -62,5 +62,22 @@ public class Bird : MonoBehaviour
         {
             FindObjectOfType<GameManager>().IncreaseScore();
         }
+    }
+
+        public void RainbowEffect(float duration = 2f)
+    {
+        StartCoroutine(RainbowCoroutine(duration));
+    }
+
+    private IEnumerator RainbowCoroutine(float duration)
+    {
+        float time = 0f;
+        while (time < duration)
+        {
+            spriteRenderer.color = Color.HSVToRGB(Mathf.PingPong(Time.time * 0.5f, 1f), 1f, 1f);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        spriteRenderer.color = Color.white; // reset to normal
     }
 }
